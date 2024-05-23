@@ -85,11 +85,11 @@ We welcome contributions to improve HealthYou. To contribute:
     ```
 6. **Open a Pull Request**
 
-Please ensure your code adheres to our coding standards and includes tests where applicable.
+Please ensure your code adheres to the company's coding standards and includes tests where applicable.
 
 ## License
 
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for more information.
+This project is yet to be licensed under the MIT License. See the [LICENSE](LICENSE) file for more information.
 
 ---
 
