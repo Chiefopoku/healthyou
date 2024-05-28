@@ -62,7 +62,7 @@ nav ul li a:hover {
 
 /* Hero Section Styles */
 .hero {
-    background-image: url('/static/assets/images/pexels-pixabay-40568.jpeg');
+    background-image: url('/static/assets/images/white.jpeg');
     background-size: cover;
     background-position: center;
     height: 100vh; /* Full height of the viewport */
@@ -70,8 +70,8 @@ nav ul li a:hover {
     display: flex;
     flex-direction: column;
     justify-content: flex-start; /* Align items at the top */
-    align-items: flex-end; /* Center items horizontally */
-    text-align: right; /* Center text */
+    align-items: center; /* Center items horizontally */
+    text-align: center; /* Center text */
     color: #393E46; /* Text color for better readability */
     padding-top: 50px; /* Add some padding at the top for spacing */
 }
@@ -222,7 +222,7 @@ h2 {
 
 /* Call to Action Section Styles */
 #cta {
-    background-image: url('/static/assets/images/white.jpeg');
+    background-image: url('/static/assets/images/pexels.jpeg');
     background-size: cover;
     background-position: center;
     height: 100vh; /* Full height of the viewport */
