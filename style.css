@@ -210,6 +210,8 @@ h2 {
     color: #666; /* Testimonial text color */
 }
 
+
+
 /* Call to Action Section Styles */
 #cta {
     padding: 60px 20px;
@@ -323,6 +325,30 @@ button.btn:hover {
     color: #333; /* Tip text color */
 }
 
+/* Signup Card Styles */
+.signup-card {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #fefae0;
+}
+
+.card {
+    background-color: #bacaa9;
+    padding: 40px 60px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    width: 100%;
+    max-width: 400px;
+}
+
+.card h1 {
+    margin-bottom: 20px;
+    font-size: 28px;
+    color: #333;
+}
 
 /* Footer Styles */
 footer {
