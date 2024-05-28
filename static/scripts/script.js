@@ -219,29 +219,3 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 });
-
-function handleLogin(event) {
-    event.preventDefault();
-    const email = document.getElementById('loginEmail').value;
-    const password = document.getElementById('loginPassword').value;
-
-    const userData = { email, password };
-
-    fetch('/api/login', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(userData)
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.success) {
-            localStorage.setItem('currentUser', JSON.stringify(data.user));
-            window.location.href = 'account.html';
-        } else {
-            alert('Invalid email or password');
-        }
-    })
-    .catch(error => console.error('Error:', error));
-}

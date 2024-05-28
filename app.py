@@ -9,28 +9,28 @@ users = []
 def index():
     return render_template('index.html')
 
-@app.route('/features')
-def features():
-    return render_template('features.html')
-
-@app.route('/account')
-def account():
-    return render_template('account.html')
-
-@app.route('/login')
-def login():
-    return render_template('login.html')
-
 @app.route('/signup')
-def signup():
+def signup_page():
     return render_template('signup.html')
 
+@app.route('/login')
+def login_page():
+    return render_template('login.html')
+
+@app.route('/account')
+def account_page():
+    return render_template('account.html')
+
+@app.route('/features')
+def features_page():
+    return render_template('features.html')
+
 @app.route('/about')
-def about():
+def about_page():
     return render_template('about.html')
 
 @app.route('/api/signup', methods=['POST'])
-def signup_api():
+def signup():
     data = request.get_json()
     name = data.get('name')
     email = data.get('email')
@@ -54,7 +54,7 @@ def signup_api():
     return jsonify({'success': True, 'user': user}), 201
 
 @app.route('/api/login', methods=['POST'])
-def login_api():
+def login():
     data = request.get_json()
     email = data.get('email')
     password = data.get('password')
