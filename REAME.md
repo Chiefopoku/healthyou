@@ -33,7 +33,7 @@ To get started with HealthYou, follow these steps:
 
 1. **Clone the Repository**
     ```bash
-    git clone https://github.com/yourusername/HealthYou.git
+    git clone https://github.com/Chiefopoku/HealthYou.git
     ```
 
 2. **Navigate to the Project Directory**
