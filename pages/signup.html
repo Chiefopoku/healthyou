@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://apis.google.com; object-src 'none'; style-src 'self' 'unsafe-inline';">
     <title>HealthYou Sign Up</title>
     <link rel="stylesheet" href="/styles/style.css">
 </head>
@@ -21,7 +22,7 @@
     <section class="signup-card">
         <div class="card">
             <h1>Sign Up</h1>
-            <form id="signupForm">
+            <form id="signupForm" action="/api/signup" method="POST">
                 <div class="form-group">
                     <label for="name">Name:</label>
                     <input type="text" id="name" name="name" required>
@@ -51,7 +52,7 @@
                     </select>
                 </div>
                 <button type="submit" class="btn">Sign Up</button>
-            </form>
+            </form> 
         </div>
     </section>
 

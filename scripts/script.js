@@ -27,26 +27,48 @@ function handleReminderForm(event) {
     const reminderType = document.getElementById('reminder-type').value;
     const interval = document.getElementById('interval').value;
 
-    // Create a new reminder element
-    const reminderElement = document.createElement('div');
-    reminderElement.className = 'reminder-item';
-    reminderElement.innerHTML = `
-        <strong>Reminder:</strong> ${reminderType} <br> 
-        <strong>Interval:</strong> ${interval} 
-        <button class="edit-btn">Edit</button>
-        <button class="delete-btn">Delete</button>
-    `;
+    // Create reminder data object
+    const reminderData = {
+        type: reminderType,
+        interval: interval
+    };
 
-    // Append the new reminder to the reminder list
-    const reminderList = document.querySelector('.reminder-list');
-    reminderList.appendChild(reminderElement);
+    // Send the data to the backend
+    fetch('/api/reminders', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(reminderData)
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            // Create a new reminder element
+            const reminderElement = document.createElement('div');
+            reminderElement.className = 'reminder-item';
+            reminderElement.innerHTML = `
+                <strong>Reminder:</strong> ${reminderType} <br> 
+                <strong>Interval:</strong> ${interval} 
+                <button class="edit-btn">Edit</button>
+                <button class="delete-btn">Delete</button>
+            `;
 
-    // Attach event listeners to the new buttons
-    reminderElement.querySelector('.edit-btn').addEventListener('click', editReminder);
-    reminderElement.querySelector('.delete-btn').addEventListener('click', deleteReminder);
+            // Append the new reminder to the reminder list
+            const reminderList = document.querySelector('.reminder-list');
+            reminderList.appendChild(reminderElement);
 
-    // Reset the form
-    event.target.reset();
+            // Attach event listeners to the new buttons
+            reminderElement.querySelector('.edit-btn').addEventListener('click', editReminder);
+            reminderElement.querySelector('.delete-btn').addEventListener('click', deleteReminder);
+
+            // Reset the form
+            event.target.reset();
+        } else {
+            alert('Failed to set reminder');
+        }
+    })
+    .catch(error => console.error('Error:', error));
 }
 
 // Function to edit a reminder
@@ -69,44 +91,7 @@ function deleteReminder(event) {
     reminderElement.remove();
 }
 
-// Set initial health tip and start the interval for changing health tips
-document.addEventListener('DOMContentLoaded', () => {
-    changeHealthTip(); // Set the initial health tip
-    setInterval(changeHealthTip, 10000); // Change health tip every 10 seconds
-
-    // Attach event listener to the reminder form
-    const reminderForm = document.getElementById('reminder-form');
-    reminderForm.addEventListener('submit', handleReminderForm);
-});
-
-document.addEventListener('DOMContentLoaded', () => {
-    const signupForm = document.getElementById('signupForm');
-    const loginForm = document.getElementById('loginForm');
-    const logoutButton = document.getElementById('logout');
-    const userNameDisplay = document.getElementById('userName');
-
-    if (signupForm) {
-        signupForm.addEventListener('submit', handleSignup);
-    }
-
-    if (loginForm) {
-        loginForm.addEventListener('submit', handleLogin);
-    }
-
-    if (logoutButton) {
-        logoutButton.addEventListener('click', handleLogout);
-    }
-
-    if (userNameDisplay) {
-        const user = JSON.parse(localStorage.getItem('currentUser'));
-        if (user) {
-            userNameDisplay.textContent = user.name;
-        } else {
-            window.location.href = 'login.html';
-        }
-    }
-});
-
+// Function to handle signup
 function handleSignup(event) {
     event.preventDefault();
     const name = document.getElementById('name').value;
@@ -121,38 +106,142 @@ function handleSignup(event) {
         return;
     }
 
-    const users = JSON.parse(localStorage.getItem('users')) || [];
-    const userExists = users.some(user => user.email === email);
+    const userData = { name, email, password, birthday, sex };
 
-    if (userExists) {
-        alert('User already exists with this email!');
-        return;
+    fetch('/api/signup', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(userData)
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            localStorage.setItem('currentUser', JSON.stringify(data.user));
+            window.location.href = 'account.html';
+        } else {
+            alert('Signup failed');
+        }
+    })
+    .catch(error => console.error('Error:', error));
+}
+
+// Function to handle login
+function handleLogin(event) {
+    event.preventDefault();
+    const email = document.getElementById('loginEmail').value;
+    const password = document.getElementById('loginPassword').value;
+
+    const userData = { email, password };
+
+    fetch('/api/login', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(userData)
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            localStorage.setItem('currentUser', JSON.stringify(data.user));
+            window.location.href = 'account.html';
+        } else {
+            alert('Invalid email or password');
+        }
+    })
+    .catch(error => console.error('Error:', error));
+}
+
+// Function to handle logout
+function handleLogout() {
+    localStorage.removeItem('currentUser');
+    window.location.href = 'login.html';
+}
+
+// Function to export data
+function exportData() {
+    // Mock function to export data
+    alert('Data export functionality is not yet implemented.');
+}
+
+// Function to confirm account deletion
+function confirmDelete() {
+    const confirmation = confirm('Are you sure you want to delete your account? This action cannot be undone.');
+    if (confirmation) {
+        deleteAccount();
+    }
+}
+
+// Function to delete account
+function deleteAccount() {
+    // Mock function to delete account
+    alert('Account deletion functionality is not yet implemented.');
+}
+
+// Set initial health tip and start the interval for changing health tips
+document.addEventListener('DOMContentLoaded', () => {
+    changeHealthTip(); // Set the initial health tip
+    setInterval(changeHealthTip, 10000); // Change health tip every 10 seconds
+
+    // Attach event listener to the reminder form
+    const reminderForm = document.getElementById('reminder-form');
+    if (reminderForm) {
+        reminderForm.addEventListener('submit', handleReminderForm);
     }
 
-    const newUser = { name, email, password, birthday, sex };
-    users.push(newUser);
-    localStorage.setItem('users', JSON.stringify(users));
-    localStorage.setItem('currentUser', JSON.stringify(newUser));
-    window.location.href = 'account.html';
-}
+    // Attach event listeners for signup and login forms
+    const signupForm = document.getElementById('signupForm');
+    if (signupForm) {
+        signupForm.addEventListener('submit', handleSignup);
+    }
+
+    const loginForm = document.getElementById('loginForm');
+    if (loginForm) {
+        loginForm.addEventListener('submit', handleLogin);
+    }
+
+    // Attach event listener for logout button
+    const logoutButton = document.getElementById('logout');
+    if (logoutButton) {
+        logoutButton.addEventListener('click', handleLogout);
+    }
+
+    // Display user name if logged in
+    const userNameDisplay = document.getElementById('userName');
+    if (userNameDisplay) {
+        const user = JSON.parse(localStorage.getItem('currentUser'));
+        if (user) {
+            userNameDisplay.textContent = user.name;
+        } else {
+            window.location.href = 'login.html';
+        }
+    }
+});
 
 function handleLogin(event) {
     event.preventDefault();
     const email = document.getElementById('loginEmail').value;
     const password = document.getElementById('loginPassword').value;
 
-    const users = JSON.parse(localStorage.getItem('users')) || [];
-    const user = users.find(user => user.email === email && user.password === password);
+    const userData = { email, password };
 
-    if (user) {
-        localStorage.setItem('currentUser', JSON.stringify(user));
-        window.location.href = 'account.html';
-    } else {
-        alert('Invalid email or password!');
-    }
-}
-
-function handleLogout() {
-    localStorage.removeItem('currentUser');
-    window.location.href = 'login.html';
+    fetch('/api/login', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(userData)
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            localStorage.setItem('currentUser', JSON.stringify(data.user));
+            window.location.href = 'account.html';
+        } else {
+            alert('Invalid email or password');
+        }
+    })
+    .catch(error => console.error('Error:', error));
 }
