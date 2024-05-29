@@ -77,110 +77,6 @@ header {
     border-bottom: 2px solid #929AAB;
 }
 
-/* Media Queries for Responsive Design */
-@media (max-width: 768px) {
-    .nav-toggle {
-        display: flex;
-    }
-
-    .nav-list {
-        flex-direction: column;
-        width: 100%;
-        display: none;
-    }
-
-    .nav-list.active {
-        display: flex;
-    }
-
-    .nav-list li {
-        margin-left: 0;
-        margin-bottom: 10px;
-    }
-
-    .features, .steps, .testimonials, .settings-sections {
-        flex-direction: column;
-        align-items: center;
-    }
-
-    .feature, .step, .testimonial, .card {
-        max-width: 100%;
-        margin-bottom: 20px;
-    }
-
-    .hero h1 {
-        font-size: 36px;
-    }
-
-    .hero p {
-        font-size: 18px;
-    }
-
-    .card {
-        padding: 20px;
-    }
-
-    .settings-sections {
-        padding: 20px 10px;
-    }
-
-    .feature img, .step img, .testimonial img {
-        max-width: 80px;
-        margin-bottom: 15px;
-    }
-}
-
-@media (max-width: 480px) {
-    header {
-        padding: 10px 20px;
-        max-width: 100%;
-        flex-direction: column;
-    }
-
-    .hero h1 {
-        font-size: 28px;
-        width: 100%;
-    }
-
-    .hero p {
-        font-size: 16px;
-    }
-
-    .btn {
-        padding: 10px 20px;
-    }
-
-    .card {
-        padding: 15px;
-        width: 90%;
-    }
-
-    section {
-        padding: 40px 10px;
-        max-width: 100%;
-    }
-
-    .feature, .step, .testimonial {
-        max-width: 100%;
-        margin: 10px 0;
-    }
-
-    .features, .steps, .testimonials {
-        flex-direction: column;
-        align-items: center;
-    }
-
-    .settings-sections {
-        flex-direction: column;
-        align-items: center;
-    }
-
-    .card {
-        max-width: 100%;
-        margin-bottom: 20px;
-    }
-}
-
 /* Hero Section Styles */
 .hero {
     background-image: url('/static/Assets/images/white.jpeg');
@@ -196,7 +92,6 @@ header {
     color: #393E46; /* Text color for better readability */
     padding-top: 50px; /* Add some padding at the top for spacing */
 }
-
 
 .hero h1 {
     font-size: 48px; /* Large font size for main heading */
@@ -630,7 +525,6 @@ footer {
     color: white;
     text-align: center;
     padding: 20px;
-    
 }
 
 footer ul {
@@ -684,12 +578,7 @@ footer p {
         display: flex;
     }
 
-    nav ul {
-        flex-direction: column;
-        width: 100%;
-    }
-
-    nav ul li {
+    .nav-list li {
         margin-left: 0;
         margin-bottom: 10px;
     }
@@ -775,4 +664,64 @@ footer p {
         max-width: 100%;
         margin-bottom: 20px;
     }
+}
+
+/* Notification Preferences Section Styles */
+.notification-preferences {
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #EEEEEE; /* Section background color */
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.notification-preferences h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: #393E46;
+}
+
+.notification-preferences .form-group {
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.notification-preferences label {
+    display: flex;
+    align-items: center;
+    font-weight: bold;
+    color: #393E46;
+}
+
+.notification-preferences input[type="checkbox"] {
+    margin-right: 10px;
+}
+
+.notification-preferences select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    transition: border-color 0.3s;
+}
+
+.notification-preferences select:focus {
+    border-color: #929AAB;
+    outline: none;
+}
+
+.notification-preferences button {
+    background-color: #929AAB;
+    color: white;
+    padding: 15px 30px;
+    text-decoration: none;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.notification-preferences button:hover {
+    background-color: #393E46;
 }
