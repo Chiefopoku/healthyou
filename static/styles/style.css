@@ -35,37 +35,21 @@ header {
     color: inherit;
 }
 
+.nav {
+    position: relative;
+}
+
 .nav-toggle {
     display: none;
     flex-direction: column;
     cursor: pointer;
 }
 
-.nav-toggle .hamburger {
+.nav-toggle-bar {
     width: 25px;
     height: 3px;
-    background-color: #0f0b0b;
-    border-radius: 5px;
-    position: relative;
-}
-
-.nav-toggle .hamburger::before,
-.nav-toggle .hamburger::after {
-    content: '';
-    position: absolute;
-    width: 25px;
-    height: 3px;
-    background-color: #0f0b0b;
-    border-radius: 5px;
-    transition: all 0.3s;
-}
-
-.nav-toggle .hamburger::before {
-    transform: translateY(-8px);
-}
-
-.nav-toggle .hamburger::after {
-    transform: translateY(8px);
+    background-color: #0c0b0b;
+    margin: 4px 0;
 }
 
 .nav-list {
@@ -100,9 +84,9 @@ header {
     }
 
     .nav-list {
-        display: none;
         flex-direction: column;
         width: 100%;
+        display: none;
     }
 
     .nav-list.active {
@@ -110,11 +94,90 @@ header {
     }
 
     .nav-list li {
+        margin-left: 0;
+        margin-bottom: 10px;
+    }
+
+    .features, .steps, .testimonials, .settings-sections {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .feature, .step, .testimonial, .card {
+        max-width: 100%;
+        margin-bottom: 20px;
+    }
+
+    .hero h1 {
+        font-size: 36px;
+    }
+
+    .hero p {
+        font-size: 18px;
+    }
+
+    .card {
+        padding: 20px;
+    }
+
+    .settings-sections {
+        padding: 20px 10px;
+    }
+
+    .feature img, .step img, .testimonial img {
+        max-width: 80px;
+        margin-bottom: 15px;
+    }
+}
+
+@media (max-width: 480px) {
+    header {
+        padding: 10px 20px;
+        max-width: 100%;
+        flex-direction: column;
+    }
+
+    .hero h1 {
+        font-size: 28px;
+        width: 100%;
+    }
+
+    .hero p {
+        font-size: 16px;
+    }
+
+    .btn {
+        padding: 10px 20px;
+    }
+
+    .card {
+        padding: 15px;
+        width: 90%;
+    }
+
+    section {
+        padding: 40px 10px;
+        max-width: 100%;
+    }
+
+    .feature, .step, .testimonial {
+        max-width: 100%;
         margin: 10px 0;
     }
 
-    .nav-list li a {
-        padding: 10px 20px;
+    .features, .steps, .testimonials {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .settings-sections {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .card {
+        max-width: 100%;
+        margin-bottom: 20px;
     }
 }
 
