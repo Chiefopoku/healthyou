@@ -4,6 +4,7 @@ app = Flask(__name__)
 
 # In-memory storage for demo purposes
 users = []
+reminders = []
 
 @app.route('/')
 def index():
@@ -65,6 +66,20 @@ def login():
         return jsonify({'success': True, 'user': user}), 200
     else:
         return jsonify({'success': False, 'message': 'Invalid email or password'}), 401
+
+@app.route('/api/reminders', methods=['GET', 'POST'])
+def reminders():
+    if request.method == 'POST':
+        data = request.get_json()
+        reminder = {
+            'type': data.get('type'),
+            'interval': data.get('interval')
+        }
+        reminders.append(reminder)
+        return jsonify({'success': True, 'reminder': reminder}), 201
+
+    elif request.method == 'GET':
+        return jsonify({'success': True, 'reminders': reminders}), 200
 
 if __name__ == '__main__':
     app.run(debug=True)
