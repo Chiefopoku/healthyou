@@ -1,4 +1,6 @@
-// Array of health tips to be displayed
+// Script for HealthYou web application
+
+// Health tips array
 const healthTips = [
     "Drink at least 8 cups of water daily.",
     "Take a 5-minute break every hour to stretch.",
@@ -12,7 +14,7 @@ const healthTips = [
     "Keep a gratitude journal to boost your mental health."
 ];
 
-// Function to change the health tip
+// Function to change the health tip displayed
 function changeHealthTip() {
     const tipElement = document.getElementById('health-tip');
     if (tipElement) {
@@ -23,85 +25,64 @@ function changeHealthTip() {
     }
 }
 
-// Function to handle form submissions for setting reminders
-function handleReminderForm(event) {
+// Set an interval to change the health tip every 10 seconds
+setInterval(changeHealthTip, 10000);
+
+// Function to handle reminder form submission
+document.getElementById('reminder-form').addEventListener('submit', function(event) {
     event.preventDefault();
 
     const reminderType = document.getElementById('reminder-type').value;
     const interval = document.getElementById('interval').value;
-
-    const reminderData = {
-        type: reminderType,
-        interval: interval
-    };
 
     fetch('/api/reminders', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify(reminderData)
+        body: JSON.stringify({ type: reminderType, interval: interval })
     })
     .then(response => response.json())
     .then(data => {
         if (data.success) {
-            const reminderElement = document.createElement('div');
-            reminderElement.className = 'reminder-item';
-            reminderElement.innerHTML = `
-                <strong>Reminder:</strong> ${reminderType} <br> 
-                <strong>Interval:</strong> ${interval} 
-                <button class="edit-btn">Edit</button>
-                <button class="delete-btn">Delete</button>
-            `;
-
-            const reminderList = document.querySelector('.reminder-list');
-            reminderList.appendChild(reminderElement);
-
-            reminderElement.querySelector('.edit-btn').addEventListener('click', editReminder);
-            reminderElement.querySelector('.delete-btn').addEventListener('click', deleteReminder);
-
-            event.target.reset();
+            displayReminder(data.reminder);
+            this.reset(); // Reset form fields
         } else {
             alert('Failed to set reminder');
         }
     })
     .catch(error => console.error('Error:', error));
+});
+
+// Function to display reminders on the page
+function displayReminder(reminder) {
+    const reminderList = document.getElementById('reminder-list');
+    const reminderItem = document.createElement('div');
+    reminderItem.className = 'reminder-item';
+    reminderItem.innerHTML = `
+        <strong>Reminder:</strong> ${reminder.type} <br> 
+        <strong>Interval:</strong> ${reminder.interval}
+        <button onclick="deleteReminder(this)">Delete</button>
+    `;
+    reminderList.appendChild(reminderItem);
 }
 
-// Function to edit a reminder
-function editReminder(event) {
-    const reminderElement = event.target.closest('.reminder-item');
-    const reminderType = reminderElement.querySelector('strong').innerText.split(': ')[1];
-    const interval = reminderElement.querySelector('strong + strong').innerText.split(': ')[1];
-
-    document.getElementById('reminder-type').value = reminderType;
-    document.getElementById('interval').value = interval;
-
-    reminderElement.remove();
+// Function to delete a reminder from the page
+function deleteFullChainBlockItem(button) {
+    button.parentNode.remove();
 }
 
-// Function to delete a reminder
-function deleteReminder(event) {
-    const reminderElement = event.target.closest('.reminder-item');
-    reminderElement.remove();
-}
-
-// Function to handle signup
-function handleSignup(event) {
+// Function to handle user signup
+document.getElementById('signup-form').addEventListener('submit', function(event) {
     event.preventDefault();
-    const name = document.getElementById('name').value;
-    const email = document.getElementById('email').value;
-    const password = document.getElementById('password').value;
-    const passwordVerify = document.getElementById('passwordVerify').value;
-    const birthday = document.getElementById('birthday').value;
-    const sex = document.getElementById('sex').value;
 
-    if (password !== passwordVerify) {
-        alert('Passwords do not match!');
-        return;
-    }
-
-    const userData = { name, email, password, birthday, sex };
+    const userData = {
+        name: this.elements['name'].value,
+        email: this.elements['email'].value,
+        password: this.elements['password'].value,
+        birthday: this.elements['birthday'].value,
+        sex: this.elements['sex'].value
+    };
 
     fetch('/api/signup', {
         method: 'POST',
@@ -113,98 +94,48 @@ function handleSignup(event) {
     .then(response => response.json())
     .then(data => {
         if (data.success) {
-            localStorage.setItem('currentUser', JSON.stringify(data.user));
-            window.location.href = 'account.html';
+            window.location.href = '/account'; // Redirect to account page
         } else {
-            alert('Signup failed');
+            alert('Signup failed: ' + data.message);
         }
     })
     .catch(error => console.error('Error:', error));
-}
+});
 
-// Function to handle login
-function handleLogin(event) {
+// Function to handle user login
+document.getElementById('login-form').addEventListener('submit', function(event) {
     event.preventDefault();
-    const email = document.getElementById('loginEmail').value;
-    const password = document.getElementById('loginPassword').value;
 
-    const userData = { email, password };
+    const email = this.elements['email'].value;
+    const password = this.elements['password'].value;
 
     fetch('/api/login', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify(userData)
+        body: JSON.stringify({ email: email, password: password })
     })
     .then(response => response.json())
     .then(data => {
         if (data.success) {
-            localStorage.setItem('currentUser', JSON.stringify(data.user));
-            window.location.href = 'account.html';
+            window.location.href = '/account'; // Redirect to account page
         } else {
-            alert('Invalid email or password');
+            alert('Login failed: ' + data.message);
         }
     })
     .catch(error => console.error('Error:', error));
-}
+});
 
-// Function to handle logout
-function handleLogout() {
-    localStorage.removeItem('currentUser');
-    window.location.href = 'login.html';
-}
-
-// Function to export data
-function exportData() {
-    alert('Data export functionality is not yet implemented.');
-}
-
-// Function to confirm account deletion
-function confirmDelete() {
-    const confirmation = confirm('Are you sure you want to delete your account? This action cannot be undone.');
-    if (confirmation) {
-        deleteAccount();
+// Utility function to update DOM elements
+function updateDOM(elementId, value) {
+    const element = document.getElementById(elementId);
+    if (element) {
+        element.innerText = value;
     }
 }
 
-// Function to delete account
-function deleteAccount() {
-    alert('Account deletion functionality is not yet implemented.');
-}
-
-// Set initial health tip and start the interval for changing health tips
-document.addEventListener('DOMContentLoaded', () => {
-    changeHealthTip();
-    setInterval(changeHealthTip, 10000);
-
-    const reminderForm = document.getElementById('reminder-form');
-    if (reminderForm) {
-        reminderForm.addEventListener('submit', handleReminderForm);
-    }
-
-    const signupForm = document.getElementById('signupForm');
-    if (signupForm) {
-        signupForm.addEventListener('submit', handleSignup);
-    }
-
-    const loginForm = document.getElementById('loginForm');
-    if (loginForm) {
-        loginForm.addEventListener('submit', handleLogin);
-    }
-
-    const logoutButton = document.getElementById('logout');
-    if (logoutButton) {
-        logoutButton.addEventListener('click', handleLogout);
-    }
-
-    const userNameDisplay = document.getElementById('userName');
-    if (userNameDisplay) {
-        const user = JSON.parse(localStorage.getItem('currentUser'));
-        if (user) {
-            userNameDisplay.textContent = user.name;
-        } else {
-            window.location.href = 'login.html';
-        }
-    }
+// Invoke initial functions on page load
+document.addEventListener('DOMContentLoaded', function() {
+    changeHealthTip(); // Immediately change the health tip when the page loads
 });
