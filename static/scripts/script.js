@@ -29,6 +29,20 @@ const healthTips = [
     "Stay positive and practice self-compassion. Be kind to yourself and focus on your progress, not perfection."
 ];
 
+fetch('/api/reminders')
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+    })
+    .then(data => {
+        console.log(data);
+    })
+    .catch(error => {
+        console.error('There was a problem with the fetch operation:', error);
+    });
+
 // Function to change the health tip displayed
 function changeHealthTip() {
     const tipElement = document.getElementById('health-tip');
@@ -39,6 +53,7 @@ function changeHealthTip() {
         console.error('Element with id "health-tip" not found.');
     }
 }
+
 
 // Set an interval to change the health tip every 10 seconds
 setInterval(changeHealthTip, 10000);
