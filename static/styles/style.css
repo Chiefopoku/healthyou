@@ -77,6 +77,45 @@ header {
     border-bottom: 2px solid #929AAB;
 }
 
+/* Hero Section Styles */
+.hero {
+    background-image: url('/static/Assets/images/white.jpeg');
+    background-size: cover;
+    background-position: center;
+    height: 100vh; /* Full height of the viewport */
+    padding: 0 20px; /* Horizontal padding for better text alignment */
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start; /* Align items at the top */
+    align-items: center; /* Center items horizontally */
+    text-align: center; /* Center text */
+    color: #393E46; /* Text color for better readability */
+    padding-top: 50px; /* Add some padding at the top for spacing */
+}
+
+.hero h1 {
+    font-size: 48px; /* Large font size for main heading */
+    margin-bottom: 20px; /* Space below the heading */
+}
+
+.hero p {
+    font-size: 24px; /* Large font size for subtext */
+    margin-bottom: 40px; /* Space below the paragraph */
+}
+
+.hero .btn {
+    background-color: #929AAB; /* Button background color */
+    color: white; /* Text color */
+    padding: 15px 30px; /* Padding inside the button */
+    text-decoration: none; /* No underline */
+    border-radius: 5px; /* Rounded corners for the button */
+    transition: background-color 0.3s; /* Smooth transition for hover effect */
+}
+
+.hero .btn:hover {
+    background-color: #393E46; /* Button hover color */
+}
+
 /* Section Styles */
 section {
     padding: 60px 20px;
@@ -89,12 +128,325 @@ h2 {
     color: #393E46; /* Heading text color */
 }
 
-/* Card Styles */
+/* Features Section Styles */
+.features {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+.feature {
+    flex: 1;
+    margin: 10px;
+    max-width: 250px;
+    background-color: #EEEEEE; /* Feature background color */
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.feature:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.feature img {
+    max-width: 100px;
+    margin-bottom: 20px;
+}
+
+.feature h3 {
+    font-size: 24px;
+    color: #393E46; /* Feature heading color */
+}
+
+.feature p {
+    font-size: 16px;
+    color: #929AAB; /* Feature text color */
+}
+
+/* How It Works Section Styles */
+.steps {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+.step {
+    flex: 1;
+    margin: 10px;
+    max-width: 300px;
+    background-color: #EEEEEE; /* Step background color */
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s, box-shadow 0.3s;
+    text-align: left;
+}
+
+.step:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.step h3 {
+    font-size: 24px;
+    color: #393E46; /* Step heading color */
+    margin-bottom: 10px;
+}
+
+.step p {
+    font-size: 16px;
+    color: #929AAB; /* Step text color */
+}
+
+/* Testimonials Section Styles */
+.testimonials {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+.testimonial {
+    flex: 1;
+    margin: 10px;
+    max-width: 350px;
+    background-color: #F7F7F7; /* Testimonial background color */
+    padding: 20px;
+    border-left: 5px solid #929AAB; /* Testimonial border color */
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s, box-shadow 0.3s;
+    text-align: left;
+}
+
+.testimonial:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.testimonial img {
+    max-width: 60px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+
+.testimonial p {
+    font-size: 16px;
+    color: #929AAB; /* Testimonial text color */
+}
+
+/* Call to Action Section Styles */
+#cta {
+    background-image: url("/static/Assets/images/pexels.jpeg");
+    background-size: cover;
+    background-position: center;
+    height: 100vh; /* Full height of the viewport */
+    padding: 0 20px; /* Horizontal padding for better text alignment */
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start; /* Align items at the top */
+    align-items: center; /* Center items horizontally */
+    text-align: center; /* Center text */
+    color: #393E46; /* Text color for better readability */
+    padding-top: 50px; /* Add some padding at the top for spacing */
+    padding: 60px 20px;
+    background-color: #EEEEEE; /* CTA background color */
+}
+
+#cta h2 {
+    font-size: 30px;
+    margin-bottom: 20px;
+    color: #393E46; /* CTA heading color */
+}
+
+#cta p {
+    font-size: 18px;
+    padding: 20px;
+    color: #929AAB; /* CTA text color */
+}
+
+#cta .btn {
+    background-color: #929AAB; /* Button background color */
+    color: white;
+    padding: 15px 30px;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+#cta .btn:hover {
+    background-color: #393E46; /* Button hover color */
+}
+
+/* Reminder Setup and Current Reminders Section Styles */
+.reminder-setup-section,
+.current-reminders-section {
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #EEEEEE; /* Section background color */
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    max-height: 400px; /* Maintain the same height */
+    overflow-y: auto; /* Add scroll if content overflows */
+}
+
+.form-group {
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #393E46; /* Label text color */
+}
+
+input, select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    transition: border-color 0.3s;
+}
+
+input:focus, select:focus {
+    border-color: #929AAB;
+    outline: none;
+}
+
+button.btn {
+    background-color: #929AAB; /* Button background color */
+    color: white;
+    padding: 15px 30px;
+    text-decoration: none;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button.btn:hover {
+    background-color: #393E46; /* Button hover color */
+}
+
+/* Reminder List Styles */
+.reminder-list {
+    max-height: 100%; /* Maintain the same height */
+    overflow-y: auto; /* Add scroll if content overflows */
+}
+
+.reminder-item {
+    background-color: #EEEEEE;
+    margin: 10px 0;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+/* Health Tips Section Styles */
+.health-tips-section {
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #EEEEEE; /* Section background color */
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    max-height: 400px; /* Maintain the same height */
+    overflow-y: auto; /* Add scroll if content overflows */
+}
+
+#health-tip {
+    font-size: 18px;
+    color: #393E46; /* Tip text color */
+}
+
+/* Signup Card Styles */
+.signup-card {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #F7F7F7;
+}
+
+.card {
+    background-color: #EEEEEE;
+    padding: 40px 60px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    width: 100%;
+    max-width: 400px;
+}
+
+.card h1 {
+    margin-bottom: 20px;
+    font-size: 28px;
+    color: #393E46;
+}
+
+.form-group {
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #393E46;
+}
+
+input,
+select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    transition: border-color 0.3s;
+}
+
+input:focus,
+select:focus {
+    border-color: #929AAB;
+    outline: none;
+}
+
+button.btn {
+    background-color: #929AAB;
+    color: white;
+    padding: 15px 30px;
+    text-decoration: none;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    width: 100%;
+}
+
+button.btn:hover {
+    background-color: #393E46;
+}
+
+/* Card Styles for Settings Sections */
+.settings-sections {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    gap: 20px;
+    padding: 40px 20px;
+}
+
 .card {
     background-color: #fff;
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    flex: 1 1 calc(33.333% - 40px);
+    max-width: calc(33.333% - 40px);
     box-sizing: border-box;
 }
 
@@ -165,6 +517,20 @@ h2 {
 
 .card .form-group input[type="checkbox"] {
     margin-right: 10px;
+}
+
+/* CSS for the spinner */
+.spinner {
+    border: 4px solid rgba(0, 0, 0, 0.1);
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border-left-color: #09f;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
 }
 
 /* Footer Styles */
