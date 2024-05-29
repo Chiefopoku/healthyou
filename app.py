@@ -1,10 +1,11 @@
-from flask import Flask, request, jsonify, render_template
+from flask import Flask, request, jsonify, render_template, redirect, url_for
+from werkzeug.security import generate_password_hash, check_password_hash
 
 app = Flask(__name__)
 
 # In-memory storage for demo purposes
 users = []
-reminders_list = []
+reminders = []
 
 @app.route('/')
 def index():
@@ -44,10 +45,11 @@ def signup():
         return jsonify({'success': False, 'message': 'User already exists'}), 400
 
     # Save the user
+    hashed_password = generate_password_hash(password)
     user = {
         'name': name,
         'email': email,
-        'password': password,  # Note: Store hashed passwords in a real app
+        'password': hashed_password,
         'birthday': birthday,
         'sex': sex
     }
@@ -61,8 +63,8 @@ def login():
     password = data.get('password')
 
     # Find the user
-    user = next((user for user in users if user['email'] == email and user['password'] == password), None)
-    if user:
+    user = next((user for user in users if user['email'] == email), None)
+    if user and check_password_hash(user['password'], password):
         return jsonify({'success': True, 'user': user}), 200
     else:
         return jsonify({'success': False, 'message': 'Invalid email or password'}), 401
@@ -75,11 +77,16 @@ def handle_reminders():
             'type': data.get('type'),
             'interval': data.get('interval')
         }
-        reminders_list.append(reminder)
+        reminders.append(reminder)
         return jsonify({'success': True, 'reminder': reminder}), 201
 
     elif request.method == 'GET':
-        return jsonify({'success': True, 'reminders': reminders_list}), 200
+        return jsonify({'success': True, 'reminders': reminders}), 200
+
+@app.route('/logout')
+def logout():
+    # In a real app, this would involve session management
+    return redirect(url_for('login_page'))
 
 if __name__ == '__main__':
     app.run(debug=True)
