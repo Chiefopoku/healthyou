@@ -68,7 +68,7 @@ def login():
         return jsonify({'success': False, 'message': 'Invalid email or password'}), 401
 
 @app.route('/api/reminders', methods=['GET', 'POST'])
-def reminders():
+def handle_reminders():
     if request.method == 'POST':
         data = request.get_json()
         reminder = {
@@ -83,17 +83,3 @@ def reminders():
 
 if __name__ == '__main__':
     app.run(debug=True)
-
-@app.route('/api/reminders', methods=['GET', 'POST'])
-def reminders():
-    if request.method == 'POST':
-        data = request.get_json()
-        reminder = {
-            'type': data.get('type'),
-            'interval': data.get('interval')
-        }
-        reminders.append(reminder)
-        return jsonify({'success': True, 'reminder': reminder}), 201
-
-    elif request.method == 'GET':
-        return jsonify({'success': True, 'reminders': reminders}), 200
