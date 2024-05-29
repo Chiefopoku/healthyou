@@ -5,3 +5,4 @@ requests
 pyqt5
 pyqtwebengine
 gunicorn
+Flask-SQLAlchemy
