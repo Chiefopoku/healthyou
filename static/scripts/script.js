@@ -29,20 +29,6 @@ const healthTips = [
     "Stay positive and practice self-compassion. Be kind to yourself and focus on your progress, not perfection."
 ];
 
-fetch('/api/reminders')
-    .then(response => {
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
-        return response.json();
-    })
-    .then(data => {
-        console.log(data);
-    })
-    .catch(error => {
-        console.error('There was a problem with the fetch operation:', error);
-    });
-
 // Function to change the health tip displayed
 function changeHealthTip() {
     const tipElement = document.getElementById('health-tip');
@@ -53,7 +39,6 @@ function changeHealthTip() {
         console.error('Element with id "health-tip" not found.');
     }
 }
-
 
 // Set an interval to change the health tip every 10 seconds
 setInterval(changeHealthTip, 10000);
@@ -89,7 +74,7 @@ if (reminderForm) {
 
 // Function to display reminders on the page
 function displayReminder(reminder) {
-    const reminderList = document.getElementsByClassName('reminder-list');
+    const reminderList = document.getElementById('reminder-list');
     if (reminderList) {
         const reminderItem = document.createElement('div');
         reminderItem.className = 'reminder-item';
@@ -178,11 +163,13 @@ function updateDOM(elementId, value) {
     }
 }
 
-// Invoke initial functions on page load
-document.addEventListener('DOMContentLoaded', function() {
-    changeHealthTip(); // Immediately change the health tip when the page loads
-});
+// Function to handle user logout
+function handleLogout() {
+    localStorage.removeItem('currentUser');
+    window.location.href = '/login';
+}
 
+// Invoke initial functions on page load
 document.addEventListener('DOMContentLoaded', function() {
     const navToggle = document.querySelector('.nav-toggle');
     const navList = document.querySelector('.nav-list');
@@ -227,119 +214,16 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
-function changeHealthTip() {
-    const tipElement = document.getElementById('health-tip');
-    if (tipElement) {
-        const randomIndex = Math.floor(Math.random() * healthTips.length);
-        tipElement.innerText = healthTips[randomIndex];
-    } else {
-        console.error('Element with id "health-tip" not found.');
-    }
-}
-
-// Function to handle reminder form submission
-function handleReminderForm(event) {
-    event.preventDefault();
-
-    const reminderType = document.getElementById('reminder-type').value;
-    const interval = document.getElementById('interval').value;
-
-    fetch('/api/reminders', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ type: reminderType, interval: interval })
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.success) {
-            displayReminder(data.reminder);
-            reminderForm.reset(); // Reset form fields
-        } else {
-            alert('Failed to set reminder');
+fetch('/api/reminders')
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
         }
+        return response.json();
     })
-    .catch(error => console.error('Error:', error));
-}
-
-// Function to display reminders on the page
-function displayReminder(reminder) {
-    const reminderList = document.getElementById('reminder-list');
-    if (reminderList) {
-        const reminderItem = document.createElement('div');
-        reminderItem.className = 'reminder-item';
-        reminderItem.innerHTML = `
-            <strong>Reminder:</strong> ${reminder.type} <br> 
-            <strong>Interval:</strong> ${reminder.interval}
-            <button onclick="deleteReminder(this)">Delete</button>
-        `;
-        reminderList.appendChild(reminderItem);
-    } else {
-        console.error('Element with id "reminder-list" not found.');
-    }
-}
-
-// Function to delete a reminder from the page
-function deleteReminder(button) {
-    button.parentNode.remove();
-}
-
-// Function to handle user signup
-function handleSignup(event) {
-    event.preventDefault();
-    const userData = {
-        name: event.target.elements['name'].value,
-        email: event.target.elements['email'].value,
-        password: event.target.elements['password'].value,
-        birthday: event.target.elements['birthday'].value,
-        sex: event.target.elements['sex'].value
-    };
-
-    fetch('/api/signup', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(userData)
-    })
-    .then(response => response.json())
     .then(data => {
-        if (data.success) {
-            window.location.href = '/account'; // Redirect to account page
-        } else {
-            alert('Signup failed: ' + data.message);
-        }
+        console.log(data);
     })
-    .catch(error => console.error('Error:', error));
-}
-
-// Function to handle user login
-function handleLogin(event) {
-    event.preventDefault();
-    const email = event.target.elements['email'].value;
-    const password = event.target.elements['password'].value;
-
-    fetch('/api/login', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ email: email, password: password })
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.success) {
-            window.location.href = '/account'; // Redirect to account page
-        } else {
-            alert('Login failed: ' + data.message);
-        }
-    })
-    .catch(error => console.error('Error:', error));
-}
-
-// Function to handle user logout
-function handleLogout() {
-    localStorage.removeItem('currentUser');
-    window.location.href = '/login';
-}
+    .catch(error => {
+        console.error('There was a problem with the fetch operation:', error);
+    });
