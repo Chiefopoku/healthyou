@@ -62,7 +62,7 @@ nav ul li a:hover {
 
 /* Hero Section Styles */
 .hero {
-    background-image: url('/static/assets/images/white.jpeg');
+    background-image: url('../assets/images/white.jpeg');
     background-size: cover;
     background-position: center;
     height: 100vh; /* Full height of the viewport */
@@ -222,7 +222,7 @@ h2 {
 
 /* Call to Action Section Styles */
 #cta {
-    background-image: url('/static/assets/images/pexels.jpeg');
+    background-image: url('../assets/images/pexels.jpeg');
     background-size: cover;
     background-position: center;
     height: 100vh; /* Full height of the viewport */
