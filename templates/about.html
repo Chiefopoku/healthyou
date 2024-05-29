@@ -4,12 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://apis.google.com; object-src 'none'; style-src 'self' 'unsafe-inline';">
-    <title>About HealthYou</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles/style.css') }}">
+    <title>HealthYou</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='/styles/style.css') }}">
 </head>
 <body>
     <header>
         <div class="logo"><a href="{{ url_for('index') }}">HealthYou</a></div>
+        <button class="nav-toggle" aria-label="toggle navigation">
+            <span class="hamburger"></span>
+        </button>
         <nav>
             <ul>
                 <li><a href="{{ url_for('index') }}">Home</a></li>
