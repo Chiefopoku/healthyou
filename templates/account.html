@@ -3,24 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://apis.google.com; object-src 'none'; style-src 'self' 'unsafe-inline';">
     <title>HealthYou</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='/styles/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles/style.css') }}">
 </head>
 <body>
     <header>
         <div class="logo"><a href="{{ url_for('index') }}">HealthYou</a></div>
-        <button class="nav-toggle" aria-label="toggle navigation">
-            <span class="hamburger"></span>
-        </button>
-            <nav>
-                <ul class="nav-list">
-                    <li><a href="{{ url_for('index') }}">Home</a></li>
-                    <li><a href="{{ url_for('features_page') }}">Features</a></li>
-                    <li><a href="{{ url_for('about_page') }}">About</a></li>
-                    <li><a href="{{ url_for('index') }}">Logout</a></li>
-                </ul>
-            </nav>
+        <nav class="nav">
+            <div class="nav-toggle">
+                <div class="nav-toggle-bar"></div>
+                <div class="nav-toggle-bar"></div>
+                <div class="nav-toggle-bar"></div>
+            </div>
+            <ul class="nav-list">
+                <li><a href="{{ url_for('index') }}">Home</a></li>
+                <li><a href="{{ url_for('features_page') }}">Features</a></li>
+                <li><a href="{{ url_for('about_page') }}">About</a></li>
+                <li><a href="{{ url_for('index') }}">Logout</a></li>
+            </ul>
+        </nav>
         </header>
         <main>
             <div class="settings-sections">
