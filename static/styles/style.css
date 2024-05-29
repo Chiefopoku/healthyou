@@ -62,7 +62,7 @@ nav ul li a:hover {
 
 /* Hero Section Styles */
 .hero {
-    background-image: url('{{ url_for('static', filename='Assets/images/white.jpeg') }}');
+    background-image: url('{{ url_for('static', filename='assets/images/white.jpeg') }}');
     background-size: cover;
     background-position: center;
     height: 100vh; /* Full height of the viewport */
@@ -75,6 +75,7 @@ nav ul li a:hover {
     color: #393E46; /* Text color for better readability */
     padding-top: 50px; /* Add some padding at the top for spacing */
 }
+
 
 .hero h1 {
     font-size: 48px; /* Large font size for main heading */
@@ -222,7 +223,7 @@ h2 {
 
 /* Call to Action Section Styles */
 #cta {
-    background-image: url('{{ url_for('static', filename='Assets/images/pexels.jpeg') }}');
+    background-image: url("/static/Assets/images/white.jpeg");
     background-size: cover;
     background-position: center;
     height: 100vh; /* Full height of the viewport */
