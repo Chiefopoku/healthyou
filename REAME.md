@@ -12,6 +12,7 @@ HealthYou is a web application designed to help users maintain their daily healt
 
 ## Features
 
+
 1. **Health Tips**
     - Displays changing health tips to keep users informed and motivated.
     - Tips include hydration, nutrition, exercise, mindfulness, and more.
