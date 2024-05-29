@@ -29,6 +29,7 @@ const healthTips = [
     "Stay positive and practice self-compassion. Be kind to yourself and focus on your progress, not perfection."
 ];
 
+// Fetch reminders from the API
 fetch('/api/reminders')
     .then(response => {
         if (!response.ok) {
@@ -37,7 +38,7 @@ fetch('/api/reminders')
         return response.json();
     })
     .then(data => {
-        console.log(data);
+        data.reminders.forEach(displayReminder);
     })
     .catch(error => {
         console.error('There was a problem with the fetch operation:', error);
@@ -53,7 +54,6 @@ function changeHealthTip() {
         console.error('Element with id "health-tip" not found.');
     }
 }
-
 
 // Set an interval to change the health tip every 10 seconds
 setInterval(changeHealthTip, 10000);
@@ -170,6 +170,17 @@ if (loginForm) {
     });
 }
 
+// Function to handle user logout
+const logoutButton = document.getElementById('logout');
+if (logoutButton) {
+    logoutButton.addEventListener('click', handleLogout);
+}
+
+function handleLogout() {
+    localStorage.removeItem('currentUser');
+    window.location.href = '/login';
+}
+
 // Utility function to update DOM elements
 function updateDOM(elementId, value) {
     const element = document.getElementById(elementId);
@@ -181,4 +192,23 @@ function updateDOM(elementId, value) {
 // Invoke initial functions on page load
 document.addEventListener('DOMContentLoaded', function() {
     changeHealthTip(); // Immediately change the health tip when the page loads
+
+    const userNameDisplay = document.getElementById('userName');
+    if (userNameDisplay) {
+        const user = JSON.parse(localStorage.getItem('currentUser'));
+        if (user) {
+            userNameDisplay.textContent = user.name;
+        } else {
+            window.location.href = '/login';
+        }
+    }
+
+    const navToggle = document.querySelector('.nav-toggle');
+    const navList = document.querySelector('.nav-list');
+
+    if (navToggle && navList) {
+        navToggle.addEventListener('click', function() {
+            navList.classList.toggle('active');
+        });
+    }
 });
