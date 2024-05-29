@@ -4,3 +4,4 @@ jupyterlab-server
 requests
 pyqt5
 pyqtwebengine
+gunicorn
