@@ -57,7 +57,6 @@ function handleReminderForm(event) {
             // Append the new reminder to the reminder list
             const reminderList = document.querySelector('.reminder-list');
             reminderList.appendChild(reminderElement);
-
             // Attach event listeners to the new buttons
             reminderElement.querySelector('.edit-btn').addEventListener('click', editReminder);
             reminderElement.querySelector('.delete-btn').addEventListener('click', deleteReminder);
