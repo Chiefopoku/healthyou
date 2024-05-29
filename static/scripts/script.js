@@ -71,7 +71,7 @@ function handleReminderForm(event) {
 
 // Function to display reminders on the page
 function displayReminder(reminder) {
-    const reminderList = document.getElementById('reminder-list');
+    const reminderList = document.querySelector('.reminder-list');
     if (reminderList) {
         const reminderItem = document.createElement('div');
         reminderItem.className = 'reminder-item';
@@ -82,9 +82,10 @@ function displayReminder(reminder) {
         `;
         reminderList.appendChild(reminderItem);
     } else {
-        console.error('Element with id "reminder-list" not found.');
+        console.error('Element with class "reminder-list" not found.');
     }
 }
+
 
 function validateForm(form) {
     let isValid = true;
