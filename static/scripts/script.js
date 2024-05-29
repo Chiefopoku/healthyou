@@ -15,25 +15,26 @@ const healthTips = [
 // Function to change the health tip
 function changeHealthTip() {
     const tipElement = document.getElementById('health-tip');
-    const randomIndex = Math.floor(Math.random() * healthTips.length);
-    tipElement.innerText = healthTips[randomIndex];
+    if (tipElement) {
+        const randomIndex = Math.floor(Math.random() * healthTips.length);
+        tipElement.innerText = healthTips[randomIndex];
+    } else {
+        console.error('Element with id "health-tip" not found.');
+    }
 }
 
 // Function to handle form submissions for setting reminders
 function handleReminderForm(event) {
-    event.preventDefault(); // Prevent the default form submission
+    event.preventDefault();
 
-    // Get form data
     const reminderType = document.getElementById('reminder-type').value;
     const interval = document.getElementById('interval').value;
 
-    // Create reminder data object
     const reminderData = {
         type: reminderType,
         interval: interval
     };
 
-    // Send the data to the backend
     fetch('/api/reminders', {
         method: 'POST',
         headers: {
@@ -44,7 +45,6 @@ function handleReminderForm(event) {
     .then(response => response.json())
     .then(data => {
         if (data.success) {
-            // Create a new reminder element
             const reminderElement = document.createElement('div');
             reminderElement.className = 'reminder-item';
             reminderElement.innerHTML = `
@@ -54,14 +54,12 @@ function handleReminderForm(event) {
                 <button class="delete-btn">Delete</button>
             `;
 
-            // Append the new reminder to the reminder list
             const reminderList = document.querySelector('.reminder-list');
             reminderList.appendChild(reminderElement);
-            // Attach event listeners to the new buttons
+
             reminderElement.querySelector('.edit-btn').addEventListener('click', editReminder);
             reminderElement.querySelector('.delete-btn').addEventListener('click', deleteReminder);
 
-            // Reset the form
             event.target.reset();
         } else {
             alert('Failed to set reminder');
@@ -76,11 +74,9 @@ function editReminder(event) {
     const reminderType = reminderElement.querySelector('strong').innerText.split(': ')[1];
     const interval = reminderElement.querySelector('strong + strong').innerText.split(': ')[1];
 
-    // Populate the form with the existing reminder details
     document.getElementById('reminder-type').value = reminderType;
     document.getElementById('interval').value = interval;
 
-    // Remove the current reminder element
     reminderElement.remove();
 }
 
@@ -161,7 +157,6 @@ function handleLogout() {
 
 // Function to export data
 function exportData() {
-    // Mock function to export data
     alert('Data export functionality is not yet implemented.');
 }
 
@@ -175,22 +170,19 @@ function confirmDelete() {
 
 // Function to delete account
 function deleteAccount() {
-    // Mock function to delete account
     alert('Account deletion functionality is not yet implemented.');
 }
 
 // Set initial health tip and start the interval for changing health tips
 document.addEventListener('DOMContentLoaded', () => {
-    changeHealthTip(); // Set the initial health tip
-    setInterval(changeHealthTip, 10000); // Change health tip every 10 seconds
+    changeHealthTip();
+    setInterval(changeHealthTip, 10000);
 
-    // Attach event listener to the reminder form
     const reminderForm = document.getElementById('reminder-form');
     if (reminderForm) {
         reminderForm.addEventListener('submit', handleReminderForm);
     }
 
-    // Attach event listeners for signup and login forms
     const signupForm = document.getElementById('signupForm');
     if (signupForm) {
         signupForm.addEventListener('submit', handleSignup);
@@ -201,13 +193,11 @@ document.addEventListener('DOMContentLoaded', () => {
         loginForm.addEventListener('submit', handleLogin);
     }
 
-    // Attach event listener for logout button
     const logoutButton = document.getElementById('logout');
     if (logoutButton) {
         logoutButton.addEventListener('click', handleLogout);
     }
 
-    // Display user name if logged in
     const userNameDisplay = document.getElementById('userName');
     if (userNameDisplay) {
         const user = JSON.parse(localStorage.getItem('currentUser'));
@@ -218,17 +208,3 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 });
-
-fetch('/api/reminders')
-    .then(response => {
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
-        return response.json();
-    })
-    .then(data => {
-        console.log(data);
-    })
-    .catch(error => {
-        console.error('There was a problem with the fetch operation:', error);
-    });
