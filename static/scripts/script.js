@@ -44,32 +44,29 @@ function changeHealthTip() {
 setInterval(changeHealthTip, 10000);
 
 // Function to handle reminder form submission
-const reminderForm = document.getElementById('reminder-form');
-if (reminderForm) {
-    reminderForm.addEventListener('submit', function(event) {
-        event.preventDefault();
+function handleReminderForm(event) {
+    event.preventDefault();
 
-        const reminderType = document.getElementById('reminder-type').value;
-        const interval = document.getElementById('interval').value;
+    const reminderType = document.getElementById('reminder-type').value;
+    const interval = document.getElementById('interval').value;
 
-        fetch('/api/reminders', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ type: reminderType, interval: interval })
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                displayReminder(data.reminder);
-                reminderForm.reset(); // Reset form fields
-            } else {
-                alert('Failed to set reminder');
-            }
-        })
-        .catch(error => console.error('Error:', error));
-    });
+    fetch('/api/reminders', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ type: reminderType, interval: interval })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            displayReminder(data.reminder);
+            reminderForm.reset(); // Reset form fields
+        } else {
+            alert('Failed to set reminder');
+        }
+    })
+    .catch(error => console.error('Error:', error));
 }
 
 // Function to display reminders on the page
@@ -89,85 +86,138 @@ function displayReminder(reminder) {
     }
 }
 
+function validateForm(form) {
+    let isValid = true;
+    const email = form.elements['email'];
+    const password = form.elements['password'];
+    const passwordVerify = form.elements['passwordVerify'];
+
+    if (!email.value.includes('@')) {
+        isValid = false;
+        email.setCustomValidity('Please enter a valid email address.');
+    } else {
+        email.setCustomValidity('');
+    }
+
+    if (password.value.length < 8) {
+        isValid = false;
+        password.setCustomValidity('Password must be at least 8 characters long.');
+    } else {
+        password.setCustomValidity('');
+    }
+
+    if (password.value !== passwordVerify.value) {
+        isValid = false;
+        passwordVerify.setCustomValidity('Passwords do not match.');
+    } else {
+        passwordVerify.setCustomValidity('');
+    }
+
+    return isValid;
+}
+
+const signupForm = document.getElementById('signupForm');
+if (signupForm) {
+    signupForm.addEventListener('submit', function(event) {
+        event.preventDefault();
+        if (validateForm(signupForm)) {
+            handleSignup(event);
+        }
+    });
+}
+
 // Function to delete a reminder from the page
 function deleteReminder(button) {
     button.parentNode.remove();
 }
 
 // Function to handle user signup
-const signupForm = document.getElementById('signup-form');
-if (signupForm) {
-    signupForm.addEventListener('submit', function(event) {
-        event.preventDefault();
+function handleSignup(event) {
+    event.preventDefault();
+    const userData = {
+        name: event.target.elements['name'].value,
+        email: event.target.elements['email'].value,
+        password: event.target.elements['password'].value,
+        birthday: event.target.elements['birthday'].value,
+        sex: event.target.elements['sex'].value
+    };
 
-        const userData = {
-            name: this.elements['name'].value,
-            email: this.elements['email'].value,
-            password: this.elements['password'].value,
-            birthday: this.elements['birthday'].value,
-            sex: this.elements['sex'].value
-        };
-
-        fetch('/api/signup', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(userData)
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                window.location.href = '/account'; // Redirect to account page
-            } else {
-                alert('Signup failed: ' + data.message);
-            }
-        })
-        .catch(error => console.error('Error:', error));
-    });
+    fetch('/api/signup', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(userData)
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            window.location.href = '/features_page'; // Redirect to features page
+        } else {
+            alert('Signup failed: ' + data.message);
+        }
+    })
+    .catch(error => console.error('Error:', error));
 }
 
 // Function to handle user login
-const loginForm = document.getElementById('login-form');
-if (loginForm) {
-    loginForm.addEventListener('submit', function(event) {
-        event.preventDefault();
+function handleLogin(event) {
+    event.preventDefault();
+    const email = event.target.elements['email'].value;
+    const password = event.target.elements['password'].value;
 
-        const email = this.elements['email'].value;
-        const password = this.elements['password'].value;
-
-        fetch('/api/login', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ email: email, password: password })
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                window.location.href = '/account'; // Redirect to account page
-            } else {
-                alert('Login failed: ' + data.message);
-            }
-        })
-        .catch(error => console.error('Error:', error));
-    });
-}
-
-// Utility function to update DOM elements
-function updateDOM(elementId, value) {
-    const element = document.getElementById(elementId);
-    if (element) {
-        element.innerText = value;
-    }
+    fetch('/api/login', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ email: email, password: password })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            window.location.href = '/features_page'; // Redirect to features page
+        } else {
+            alert('Login failed: ' + data.message);
+        }
+    })
+    .catch(error => console.error('Error:', error));
 }
 
 // Function to handle user logout
 function handleLogout() {
     localStorage.removeItem('currentUser');
-    window.location.href = '/login';
+    window.location.href = '/';
 }
+
+// Show spinner
+function showSpinner() {
+    const spinner = document.createElement('div');
+    spinner.className = 'spinner';
+    document.body.appendChild(spinner);
+}
+
+// Hide spinner
+function hideSpinner() {
+    const spinner = document.querySelector('.spinner');
+    if (spinner) {
+        spinner.remove();
+    }
+}
+
+// Example usage during fetch
+function fetchData() {
+    showSpinner();
+    fetch('/api/data')
+        .then(response => response.json())
+        .then(data => {
+            // Process data
+        })
+        .finally(() => {
+            hideSpinner();
+        });
+}
+
 
 // Invoke initial functions on page load
 document.addEventListener('DOMContentLoaded', function() {
@@ -188,12 +238,12 @@ document.addEventListener('DOMContentLoaded', function() {
         reminderForm.addEventListener('submit', handleReminderForm);
     }
 
-    const signupForm = document.getElementById('signup-form');
+    const signupForm = document.getElementById('signupForm');
     if (signupForm) {
         signupForm.addEventListener('submit', handleSignup);
     }
 
-    const loginForm = document.getElementById('login-form');
+    const loginForm = document.getElementById('loginForm');
     if (loginForm) {
         loginForm.addEventListener('submit', handleLogin);
     }
@@ -227,3 +277,62 @@ fetch('/api/reminders')
     .catch(error => {
         console.error('There was a problem with the fetch operation:', error);
     });
+
+    // Request permission for push notifications
+function requestNotificationPermission() {
+    if ('Notification' in window) {
+        Notification.requestPermission().then(permission => {
+            if (permission === 'granted') {
+                new Notification('You have enabled notifications.');
+            }
+        });
+    }
+}
+
+// Send a notification
+function sendNotification(title, options) {
+    if ('Notification' in window && Notification.permission === 'granted') {
+        new Notification(title, options);
+    }
+}
+
+// Example usage for reminders
+function handleReminderForm(event) {
+    event.preventDefault();
+
+    const reminderType = document.getElementById('reminder-type').value;
+    const interval = document.getElementById('interval').value;
+
+    fetch('/api/reminders', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ type: reminderType, interval: interval })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            displayReminder(data.reminder);
+            sendNotification('Reminder Set', { body: `You have set a reminder for ${reminderType}` });
+            reminderForm.reset(); // Reset form fields
+        } else {
+            alert('Failed to set reminder');
+        }
+    })
+    .catch(error => console.error('Error:', error));
+}
+
+function loadContent(url, containerId) {
+    fetch(url)
+        .then(response => response.text())
+        .then(html => {
+            document.getElementById(containerId).innerHTML = html;
+        })
+        .catch(error => console.error('Error:', error));
+}
+
+// Example usage
+document.getElementById('load-more-button').addEventListener('click', function() {
+    loadContent('/more-content', 'content-container');
+});
